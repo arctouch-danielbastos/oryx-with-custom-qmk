@@ -134,28 +134,53 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 
-// Custom QMK here
-// Ctrl + A → á
-const key_override_t accute_a =
-    ko_make_basic(MOD_MASK_CTRL, KC_A, KC_AACU);
-// Ctrl + E → é
-const key_override_t accute_e =
-    ko_make_basic(MOD_MASK_CTRL, KC_E, KC_EACU);
-// Ctrl + I → í
-const key_override_t accute_i =
-    ko_make_basic(MOD_MASK_CTRL, KC_I, KC_IACU);
-// Ctrl + O → ó
-const key_override_t accute_o =
-    ko_make_basic(MOD_MASK_CTRL, KC_O, KC_OACU);
-// Ctrl + U → ú
-const key_override_t accute_u =
-    ko_make_basic(MOD_MASK_CTRL, KC_U, KC_UACU);
+// Define custom strings
+#define SEND_ACUTE_A SEND_STRING("á")
+#define SEND_ACUTE_E SEND_STRING("é")
+#define SEND_ACUTE_I SEND_STRING("í")
+#define SEND_ACUTE_O SEND_STRING("ó")
+#define SEND_ACUTE_U SEND_STRING("ú")
 
+#define SEND_CIRC_A SEND_STRING("â")
+#define SEND_CIRC_E SEND_STRING("ê")
+#define SEND_CIRC_O SEND_STRING("ô")
+
+#define SEND_UDIAER  SEND_STRING("ü")
+
+// Key override handler
 const key_override_t **key_overrides = (const key_override_t *[]){
-  &accute_a,
-  &accute_e,
-  &accute_i,
-  &accute_o,
-  &accute_u,
-	NULL
+    // Ctrl + vowel → acute
+    &((key_override_t)KEY_OVERRIDE_SIMPLE_MOD(MOD_LCTL, KC_A, QK_DYNAMIC_MACRO_START1)),  // Placeholder
+    &((key_override_t)KEY_OVERRIDE_SIMPLE_MOD(MOD_LCTL, KC_E, QK_DYNAMIC_MACRO_START2)),
+    &((key_override_t)KEY_OVERRIDE_SIMPLE_MOD(MOD_LCTL, KC_I, QK_DYNAMIC_MACRO_START3)),
+    &((key_override_t)KEY_OVERRIDE_SIMPLE_MOD(MOD_LCTL, KC_O, QK_DYNAMIC_MACRO_START4)),
+    &((key_override_t)KEY_OVERRIDE_SIMPLE_MOD(MOD_LCTL, KC_U, QK_DYNAMIC_MACRO_START5)),
+
+    // Alt (Option) + vowel → circumflex or ü
+    &((key_override_t)KEY_OVERRIDE_SIMPLE_MOD(MOD_LALT, KC_A, QK_DYNAMIC_MACRO_START6)),
+    &((key_override_t)KEY_OVERRIDE_SIMPLE_MOD(MOD_LALT, KC_E, QK_DYNAMIC_MACRO_START7)),
+    &((key_override_t)KEY_OVERRIDE_SIMPLE_MOD(MOD_LALT, KC_O, QK_DYNAMIC_MACRO_START8)),
+    &((key_override_t)KEY_OVERRIDE_SIMPLE_MOD(MOD_LALT, KC_U, QK_DYNAMIC_MACRO_START9)),
+
+    NULL
 };
+
+// Handle the macro actions
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (!record->event.pressed) return true;
+
+    switch (keycode) {
+        case QK_DYNAMIC_MACRO_START1: SEND_ACUTE_A; return false;
+        case QK_DYNAMIC_MACRO_START2: SEND_ACUTE_E; return false;
+        case QK_DYNAMIC_MACRO_START3: SEND_ACUTE_I; return false;
+        case QK_DYNAMIC_MACRO_START4: SEND_ACUTE_O; return false;
+        case QK_DYNAMIC_MACRO_START5: SEND_ACUTE_U; return false;
+
+        case QK_DYNAMIC_MACRO_START6: SEND_CIRC_A; return false;
+        case QK_DYNAMIC_MACRO_START7: SEND_CIRC_E; return false;
+        case QK_DYNAMIC_MACRO_START8: SEND_CIRC_O; return false;
+        case QK_DYNAMIC_MACRO_START9: SEND_UDIAER;  return false;
+    }
+
+    return true;
+}

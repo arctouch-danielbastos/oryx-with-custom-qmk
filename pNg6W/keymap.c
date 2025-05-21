@@ -1,3 +1,4 @@
+#include QMK_KEYBOARD_H
 #include "version.h"
 #include "keymap_us_international.h"
 #include "i18n.h"

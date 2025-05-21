@@ -1,5 +1,6 @@
 #include QMK_KEYBOARD_H
 #include "version.h"
+#include QMK_KEYBOARD_H
 #include "i18n.h"
 #define MOON_LED_LEVEL LED_LEVEL
 #define ML_SAFE_RANGE SAFE_RANGE
@@ -133,3 +134,46 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 
+// Custom QMK here
+// Ctrl + A → á
+const key_override_t accute_a =
+    ko_make_basic(MOD_MASK_CTRL, KC_A, KC_US_AACU);
+// Ctrl + E → é
+const key_override_t accute_e =
+    ko_make_basic(MOD_MASK_CTRL, KC_E, KC_US_EACU);
+// Ctrl + I → í
+const key_override_t accute_i =
+    ko_make_basic(MOD_MASK_CTRL, KC_I, KC_US_IACU);
+// Ctrl + O → ó
+const key_override_t accute_o =
+    ko_make_basic(MOD_MASK_CTRL, KC_O, KC_US_OACU);
+// Ctrl + U → ú
+const key_override_t accute_u =
+    ko_make_basic(MOD_MASK_CTRL, KC_U, KC_US_UACU);
+
+// Alt (Option) + A → â
+const key_override_t circumflex_a =
+    ko_make_basic(MOD_MASK_ALT, KC_A, KC_US_ACIRC);
+// Alt + E → ê
+const key_override_t circumflex_e =
+    ko_make_basic(MOD_MASK_ALT, KC_E, KC_US_ECIRC);
+// Alt + O → ô
+const key_override_t circumflex_o =
+    ko_make_basic(MOD_MASK_ALT, KC_O, KC_US_OCIRC);
+
+// Alt + U → ü
+const key_override_t diaeresis_u =
+    ko_make_basic(MOD_MASK_ALT, KC_U, KC_US_UDIA);
+
+const key_override_t *key_overrides[] = {
+    &accute_a,
+    &accute_e,
+    &accute_i,
+    &accute_o,
+    &accute_u,
+    &circumflex_a,
+    &circumflex_e,
+    &circumflex_o,
+    &diaeresis_u,
+    NULL
+};

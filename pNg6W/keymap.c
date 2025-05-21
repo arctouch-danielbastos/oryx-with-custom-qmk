@@ -165,15 +165,15 @@ const key_override_t circumflex_o =
 const key_override_t diaeresis_u =
     ko_make_basic(MOD_MASK_ALT, KC_U, KC_US_UDIA);
 
-const key_override_t *key_overrides[] = {
-    &accute_a,
-    &accute_e,
-    &accute_i,
-    &accute_o,
-    &accute_u,
-    &circumflex_a,
-    &circumflex_e,
-    &circumflex_o,
-    &diaeresis_u,
-    NULL
+const key_override_t **key_overrides = (const key_override_t *[]){
+  &accute_a,
+  &accute_e,
+  &accute_i,
+  &accute_o,
+  &accute_u,
+  &circumflex_a,
+  &circumflex_e,
+  &circumflex_o,
+  &diaeresis_u,
+	NULL
 };

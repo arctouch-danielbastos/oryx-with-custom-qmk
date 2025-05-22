@@ -1,6 +1,5 @@
 #include QMK_KEYBOARD_H
 #include "version.h"
-#include "keymap_us_international.h"
 #include "i18n.h"
 #define MOON_LED_LEVEL LED_LEVEL
 #define ML_SAFE_RANGE SAFE_RANGE
@@ -135,27 +134,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 
 // Custom QMK here
-// Ctrl + A → á
-const key_override_t accute_a =
-    ko_make_basic(MOD_MASK_CTRL, KC_A, KC_AACU);
-// Ctrl + E → é
-const key_override_t accute_e =
-    ko_make_basic(MOD_MASK_CTRL, KC_E, KC_EACU);
-// Ctrl + I → í
-const key_override_t accute_i =
-    ko_make_basic(MOD_MASK_CTRL, KC_I, KC_IACU);
-// Ctrl + O → ó
-const key_override_t accute_o =
-    ko_make_basic(MOD_MASK_CTRL, KC_O, KC_OACU);
-// Ctrl + U → ú
-const key_override_t accute_u =
-    ko_make_basic(MOD_MASK_CTRL, KC_U, KC_UACU);
+const key_override_t delete_key_override = 
+    ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
 
 const key_override_t **key_overrides = (const key_override_t *[]){
-  &accute_a,
-  &accute_e,
-  &accute_i,
-  &accute_o,
-  &accute_u,
+	&delete_key_override,
 	NULL
 };

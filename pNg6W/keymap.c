@@ -9,9 +9,6 @@ enum custom_keycodes {
   MAC_LOCK,
 };
 
-
-
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_voyager(
     KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          
@@ -134,15 +131,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 
 // Custom QMK Key Overrides
-const key_override_t option_e = ko_make_basic(MOD_MASK_ALT, KC_E, KC_LBRC);        // Alt + E → [
-const key_override_t option_r = ko_make_basic(MOD_MASK_ALT, KC_R, KC_RBRC);        // Alt + R → ]
-const key_override_t option_d = ko_make_basic(MOD_MASK_ALT, KC_D, LSFT(KC_0));     // Alt + D → )
-const key_override_t option_f = ko_make_basic(MOD_MASK_ALT, KC_F, LSFT(KC_9));     // Alt + F → (
-
-const key_override_t **key_overrides = (const key_override_t *[]){
-    &option_e,
-    &option_r,
-    &option_d,
-    &option_f,
-    NULL
-};
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (record->event.pressed) {
+        uint8_t mods = get_mods();
+        if ((mods & MOD_MASK_ALT) && keycode == KC_E) {
+            tap_code(KC_LBRC);  // [
+            return false;
+        }
+        if ((mods & MOD_MASK_ALT) && keycode == KC_R) {
+            tap_code(KC_RBRC);  // ]
+            return false;
+        }
+        if ((mods & MOD_MASK_ALT) && keycode == KC_D) {
+            tap_code16(LSFT(KC_0));  // )
+            return false;
+        }
+        if ((mods & MOD_MASK_ALT) && keycode == KC_F) {
+            tap_code16(LSFT(KC_9));  // (
+            return false;
+        }
+    }
+    return true;
+}

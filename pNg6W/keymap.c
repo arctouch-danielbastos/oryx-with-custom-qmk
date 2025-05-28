@@ -116,24 +116,10 @@ bool rgb_matrix_indicators_user(void) {
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-    case MAC_LOCK:
-      HCS(0x19E);
-
-    case RGB_SLD:
-      if (record->event.pressed) {
-        rgblight_mode(1);
-      }
-      return false;
-  }
-  return true;
-}
-
-
-// Custom QMK Key Overrides
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         uint8_t mods = get_mods();
+
+        // Custom Alt key overrides
         if ((mods & MOD_MASK_ALT) && keycode == KC_E) {
             tap_code(KC_LBRC);  // [
             return false;
@@ -150,6 +136,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             tap_code16(LSFT(KC_9));  // (
             return false;
         }
+
+        // Your existing logic
+        switch (keycode) {
+            case MAC_LOCK:
+                HCS(0x19E);
+                break;  // You were missing this!
+
+            case RGB_SLD:
+                rgblight_mode(1);
+                return false;
+        }
     }
+
     return true;
 }

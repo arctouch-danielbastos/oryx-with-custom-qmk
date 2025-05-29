@@ -121,19 +121,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         // Custom Alt key overrides
         if ((mods & MOD_MASK_ALT) && keycode == KC_E) {
-            tap_code(KC_LBRC);  // [
+            SEND_STRING("{");  // [
             return false;
         }
         if ((mods & MOD_MASK_ALT) && keycode == KC_R) {
-            tap_code(KC_RBRC);  // ]
+            SEND_STRING("}");  // ]
             return false;
         }
         if ((mods & MOD_MASK_ALT) && keycode == KC_D) {
-            tap_code16(LSFT(KC_0));  // )
+            SEND_STRING("(");  // )
             return false;
         }
         if ((mods & MOD_MASK_ALT) && keycode == KC_F) {
-            tap_code16(LSFT(KC_9));  // (
+            SEND_STRING(")");  // (
             return false;
         }
 
